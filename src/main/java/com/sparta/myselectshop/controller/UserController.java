@@ -22,7 +22,7 @@ public class UserController {
         return new ModelAndView("signup");
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login-page")
     public ModelAndView loginPage() {
         return new ModelAndView("login");
     }
@@ -30,16 +30,24 @@ public class UserController {
     @PostMapping("/signup")
     public String signup(SignupRequestDto signupRequestDto) {
         userService.signup(signupRequestDto);
-        return "redirect:/api/user/login";
+        return "redirect:/api/user/login-page";
     }
 
     @ResponseBody
     @PostMapping("/login")
     public String login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        // ajax에서 바디쪽에 값이 넘어옿기 때문에 @Requestbody 붙여줘여함
-        // HttpRequest에서 헤더가 넘어와서 받아오는것처럼 클라이언트로 반환할때는 reponse 객체를 반환한다.
         userService.login(loginRequestDto, response);
         return "success";
+    }
+
+    @GetMapping("/forbidden")
+    public ModelAndView getForbidden() {
+        return new ModelAndView("forbidden");
+    }
+
+    @PostMapping("/forbidden")
+    public ModelAndView postForbidden() {
+        return new ModelAndView("forbidden");
     }
 
 }
